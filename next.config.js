@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: [{
+        remotePatterns: [
+            {
             hostname: "i.imgur.com"
-        }]
+        },{
+            hostname: "cdn.sanity.io"
+        }
+
+    ]
     }
 }
 

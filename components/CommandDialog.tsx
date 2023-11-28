@@ -1,74 +1,81 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { File } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Search } from "lucide-react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import {
   CommandDialog,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
-  CommandList
+  CommandList,
 } from "@/components/ui/command";
 import { useSearch } from "@/hooks/useSearch";
-
- const SearchCommand = () => {
-  const router = useRouter();
+import { client } from "@/sanity/lib/client";
+import { groq } from "next-sanity";
+import Link from "next/link";
+import { Input } from "./ui/input";
+const query = groq`
+    *[_type == "post" && title match $value] | order(_createdAt desc){
+  title,
+    slug,
+    _id,
+}
+`;
+type ItemProp = {
+  title: string;
+  slug: {
+    current: string;
+  };
+  _id: string;
+};
+const SearchCommand = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [items, setItems] = useState<ItemProp[]>([]);
 
-  ;
-  const {isOpen, onClose, onOpen} = useSearch();
+  const { isOpen, onClose } = useSearch();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  
-//   const onSelect = (id: string) => {
-//     router.push(`/documents/${id}`);
-//     onClose();
-//   };
+  useEffect(() => {
+    if(!isOpen) setItems([])
+  }, [isOpen]) 
 
   if (!isMounted) {
     return null;
   }
-  
+
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    const value = event.target.value;
+    if (value.length < 3) return;
+    const posts: ItemProp[] = await client.fetch(query, { value });
+    setItems(posts);
+  };
+  console.log(items);
   return (
     <CommandDialog open={isOpen} onOpenChange={onClose}>
-      <CommandInput
-        placeholder="Search Article..."
-      />
+      <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+        <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+        <Input onChange={handleChange} className="flex h-11 w-full rounded-md bg-transparent py-3 outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none ring-offset-0 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0" />
+      </div>
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Documents">
-          {/* {documents?.map((document) => (
-            <CommandItem
-              key={document._id}
-              value={`${document._id}-${document.title}`}
-              title={document.title}
-              onSelect={() => onSelect(document._id)}
-            >
-              {document.icon ? (
-                <p className="mr-2 text-[18px]">
-                  {document.icon}
-                </p>
-              ) : (
-                <File className="mr-2 h-4 w-4" />
-              )}
-              <span>
-                {document.title}
-              </span>
+        <CommandGroup>
+          {items.length == 0 && (
+            <CommandItem className="aria-selected:bg-background">
+              No result found...
             </CommandItem>
-          ))} */}
-          <CommandItem>
-            items
-          </CommandItem>
+          )}
+          {items?.map((item) => (
+            <Link href={`/post/${item.slug.current}`} key={item?._id} onClick={onClose}>
+            <CommandItem className="cursor-pointer">{item?.title}</CommandItem>
+            </Link>
+          ))}
         </CommandGroup>
       </CommandList>
     </CommandDialog>
-  )
-}
+  );
+};
 
 export default SearchCommand;

@@ -6,16 +6,16 @@ import { SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
+import Banner from "@/components/Banner";
 
 export const revalidate = 30;
 export default async function Home() {
   // const posts = await sanityFetch<SanityDocument[]>({ query: postsQuery });
   const posts: SanityDocument[] = await client.fetch(postsQuery);
-  console.log("[POST]",posts[0].title)
   const bannerPost = posts.slice(0, 2);
   return (
     <div className="overflow-x-hidden">
-    {/* <Banner posts={bannerPost} /> */}
+    <Banner posts={bannerPost} />
     <div className="max-w-6xl mx-auto px-5 py-10">
       <h2 className="uppercase font-semibold text-xl tracking-wider pb-4">Latest Article</h2>
 

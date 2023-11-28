@@ -1,4 +1,4 @@
-// import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ReactNode } from "react";
 
@@ -9,8 +9,11 @@ type Props = {
 function layout({ children }: Props) {
   return (
     <div>
-      <Header />
-      {children}
+      <div className="min-h-[80vh]">
+        <Header />
+        {children}
+      </div>
+      <Footer />
     </div>
   );
 }

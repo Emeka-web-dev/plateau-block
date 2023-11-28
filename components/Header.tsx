@@ -26,7 +26,7 @@ function Header() {
   const {onOpen} = useToggle()
   const {onOpen: openSearch} = useSearch()
   return (
-    <header className="sticky top-0 w-full border-b border-b-foreground">
+    <header className="sticky top-0 w-full bg-background z-40">
       <div className="max-w-6xl mx-auto px-5 flex items-center justify-between py-3">
         <Link href="/" className="flex space-x-2 items-center justify-center">
           <div className="relative w-10 h-10">
