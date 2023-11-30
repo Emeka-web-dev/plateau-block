@@ -9,7 +9,7 @@ type Props = {
 function layout({ children }: Props) {
   return (
     <div>
-      <div className="min-h-[80vh]">
+      <div className="min-h-[80vh] bg-[#f5f5f5] dark:bg-[#0a0a0a]">
         <Header />
         {children}
       </div>

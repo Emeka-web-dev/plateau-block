@@ -24,6 +24,11 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
     author -> {
       image,
       name,
+    },
+    relatedArticle [] -> {
+      title,
+      slug,
+      mainImage,
     }
   }`;
 
@@ -37,4 +42,10 @@ export const aboutQuery = groq`*[_type == "about"][0]{
     description,
     socialLinks,
     body,
+    address,
+}`;
+export const aboutStateQuery = groq`*[_type == "about"][0]{
+    description,
+    socialLinks,    
+    address,
 }`;

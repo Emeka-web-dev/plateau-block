@@ -29,11 +29,11 @@ function Header() {
     <header className="sticky top-0 w-full bg-background z-40">
       <div className="max-w-6xl mx-auto px-5 flex items-center justify-between py-3">
         <Link href="/" className="flex space-x-2 items-center justify-center">
-          <div className="relative w-10 h-10">
+          <div className="relative w-12 h-12">
             <Image
-              src="https://i.imgur.com/XA7ahNg.jpg"
+              src="/think-plateau.png"
               layout="fill"
-              className="rounded-full object-cover"
+              className=" object-contain"
               alt="logo"
             />
           </div>

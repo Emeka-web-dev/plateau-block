@@ -20,6 +20,7 @@ function Banner({ posts }: Props) {
       showStatus={false}
       emulateTouch
       infiniteLoop
+      showThumbs={false}
       interval={6000}
       useKeyboardArrows
       showArrows={match ? false : true}
@@ -35,12 +36,17 @@ function Banner({ posts }: Props) {
               backgroundImage: `url(${urlForImage(post.mainImage).url()})`,
             }}
           />
-          <div className="max-w-6xl mx-auto w-full text-white text-left flex flex-col justify-center px-8 space-y-6">
+          <div className="max-w-6xl mx-auto w-full text-white text-left flex flex-col justify-center px-8 space-y-4">
             <Link href={`/post/${post.slug.current}`}>
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold capitalize w-full max-w-4xl">
                 {post.title}
               </h2>
             </Link>
+            <div>{new Date(post._createdAt).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            })}</div>
             <div className="flex space-x-2 items-center">
               <div className="relative h-8 w-8">
                 <Image

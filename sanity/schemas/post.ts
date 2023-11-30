@@ -40,12 +40,12 @@ export default defineType({
         }
       ]
     }),
-    // defineField({
-    //   name: 'categories',
-    //   title: 'Categories',
-    //   type: 'array',
-    //   of: [{type: 'reference', to: {type: 'category'}}],
-    // }),
+    defineField({
+      name: 'relatedArticle',
+      title: 'Related Article',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'post'}}],
+    }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',

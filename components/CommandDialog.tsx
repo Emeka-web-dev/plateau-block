@@ -53,7 +53,6 @@ const SearchCommand = () => {
     const posts: ItemProp[] = await client.fetch(query, { value });
     setItems(posts);
   };
-  console.log(items);
   return (
     <CommandDialog open={isOpen} onOpenChange={onClose}>
       <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
