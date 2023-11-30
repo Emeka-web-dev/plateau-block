@@ -18,7 +18,7 @@ export default function ThemeToggle() {
         if(theme == "dark") setTheme("light");
         if(theme == "light") setTheme("dark");
     }
-
+    
   return (
     <Button variant="ghost" size="icon" onClick={handleTheme}>
         {/* <SunMoon className="w-5 h-5" /> */}

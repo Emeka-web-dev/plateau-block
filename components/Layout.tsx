@@ -29,11 +29,13 @@ function Layout({ children, state }: Props) {
     const setAddress: any = useStore(state => state.setAddress);
     const setNavLinks: any = useStore(state => state.setNavLinks);
 
+
     useEffect(() => {
         setDescription(state.description);
         setAddress(state.address);
         setNavLinks(state.socialLinks)
     }, [state, setDescription, setAddress, setNavLinks])
+
     return (
     <ThemeProvider
       attribute="class"
@@ -44,7 +46,7 @@ function Layout({ children, state }: Props) {
       {children}
       <SideBarToggle />
       <CommandDialog />
-      <Toaster theme="light" />
+      <Toaster position="top-center" />
     </ThemeProvider>
   );
 }

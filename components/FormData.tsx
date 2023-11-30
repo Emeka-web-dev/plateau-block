@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import emailjs from "@emailjs/browser"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,6 +17,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
+import { useState } from "react"
+import { publicKey, serviceId, templateId } from "@/sanity/env"
+import { Spinner } from "./Spinner"
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -24,24 +28,39 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Email must be a valid address"
   }),
-  phone: z.string().min(9, {message: "Phone Number must be at least 9 character"}),
+  phone: z.string().min(5, {message: "Phone Number must be at least 9 character"}),
   message: z.string().min(4, {message: "Message must be above 4 characters"})
 })
 
 
 export default function ProfileForm() {
+    const [isLoading, setIsLoading] = useState(false)
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
           fullName: "",
           email: "",
-          phone: undefined,
+          phone: "",
           message: ""
         }
       })
       
       const onSubmit = (values: z.infer<typeof formSchema>) => {
-        toast("how are you")
+        setIsLoading(true);
+
+        emailjs.send(serviceId, templateId, {
+          name: values.fullName,
+          email: values.email,
+          phone: values.phone,
+          message: values.message,
+        }, publicKey).then(() => {
+          toast.success("Successfully sent");
+        }).catch(() => {
+          toast.error("Failed to send")
+        }).finally(() => {
+          setIsLoading(false);
+          form.reset();
+        })
       };
   return (
     <Form {...form}>
@@ -85,6 +104,7 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
+        
         <FormField
           control={form.control}
           name="message"
@@ -92,13 +112,13 @@ export default function ProfileForm() {
             <FormItem>
               <FormLabel>Message</FormLabel>
               <FormControl>
-                <textarea placeholder="Enter Message" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" rows={4} {...field} />
+                <textarea placeholder="Enter Message" className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" rows={3} {...field} />
               </FormControl>              
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg">Submit</Button>
+        <Button type="submit" size="lg" disabled={isLoading}>{isLoading ? <Spinner /> : "Submit" }</Button>
       </form>
     </Form>
   )
