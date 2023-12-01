@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { client } from "@/sanity/lib/client";
 import { aboutStateQuery } from "@/sanity/lib/queries";
 import type { Metadata } from "next";
@@ -34,7 +35,15 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body>
-        <Layout state={about}>{children}</Layout>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          // storageKey="jotion-theme-2"
+        >
+          <Layout state={about}>{children}</Layout>
+        </ThemeProvider>
       </body>
     </html>
   );
