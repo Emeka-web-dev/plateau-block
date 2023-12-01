@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AlignRight, Search } from "lucide-react";
 import { Button } from "./ui/button";
-import ThemeToggle from "./ThemeToggle";
+import {ModeToggle} from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import {useToggle} from "@/hooks/useToggle"
 import { useSearch } from "@/hooks/useSearch";
@@ -57,7 +57,7 @@ function Header() {
             <Search className="w-5 h-5" />
           </Button>
           <div className="">
-            <ThemeToggle />
+            <ModeToggle />
           </div>
           <div className="flex md:hidden">
             <Button variant="ghost" size="icon">
