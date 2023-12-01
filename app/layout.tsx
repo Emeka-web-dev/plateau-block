@@ -20,10 +20,10 @@ export const metadata: Metadata = {
     icon: [
       {
         url: "/think-plateau.png",
-        href: "/think-plateau.png"
-      }
-    ]
-  }
+        href: "/think-plateau.png",
+      },
+    ],
+  },
 };
 
 export const revalidate = 30;
@@ -32,14 +32,19 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const about = await client.fetch(aboutStateQuery)
+  const about = await client.fetch(aboutStateQuery);
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
       <body>
-        <Layout state={about}>
-          {children}
-        </Layout>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Layout state={about}>{children}</Layout>
+        </ThemeProvider>
       </body>
     </html>
   );

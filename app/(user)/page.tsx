@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <div className="overflow-x-hidden">
     <Banner posts={bannerPost} />
-    <div className="max-w-6xl mx-auto px-5 pb-5">
+    <div className="max-w-6xl mx-auto px-5 py-10">
       <h2 className="uppercase font-semibold text-xl tracking-wider pb-4">Latest Article</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 gap-y-12">

@@ -30,7 +30,7 @@ function Footer() {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                href={`/${link.link}`}
+                href={link.link}
                 className="uppercase tracking-wider text-sm hover:underline"
               >
                 {link.name}
