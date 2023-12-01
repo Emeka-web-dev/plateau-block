@@ -40,7 +40,6 @@ export default async function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          // storageKey="jotion-theme-2"
         >
           <Layout state={about}>{children}</Layout>
         </ThemeProvider>
