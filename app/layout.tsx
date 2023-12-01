@@ -1,12 +1,9 @@
-import SideBarToggle from "@/components/SideBarToggle";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { CommandDialog } from "@/components/ui/command";
+import Layout from "@/components/Layout";
+import { client } from "@/sanity/lib/client";
+import { aboutStateQuery } from "@/sanity/lib/queries";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Layout from "@/components/Layout";
-import { client } from "@/sanity/lib/client";
-import { aboutQuery, aboutStateQuery } from "@/sanity/lib/queries";
 
 const inter = Roboto({
   weight: ["300", "400", "700"],
@@ -37,14 +34,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Layout state={about}>{children}</Layout>
-        </ThemeProvider>
+        <Layout state={about}>{children}</Layout>
       </body>
     </html>
   );
