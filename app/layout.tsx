@@ -1,7 +1,4 @@
-import Layout from "@/components/Layout";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { client } from "@/sanity/lib/client";
-import { aboutStateQuery } from "@/sanity/lib/queries";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -24,13 +21,12 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 30;
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const about = await client.fetch(aboutStateQuery);
+ 
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -41,7 +37,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Layout state={about}>{children}</Layout>
+          {children}
         </ThemeProvider>
       </body>
     </html>

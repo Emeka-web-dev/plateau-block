@@ -3,6 +3,8 @@ import { useStore } from "@/hooks/atom";
 import React, { useEffect } from "react";
 import { Toaster } from "sonner";
 import CommandDialog from "./CommandDialog";
+import Footer from "./Footer";
+import Header from "./Header";
 import SideBarToggle from "./SideBarToggle";
 
 type Props = {
@@ -36,7 +38,11 @@ function Layout({ children, state }: Props) {
 
   return (
     <div>
-      {children}
+      <div className="min-h-[80vh] bg-[#f5f5f5] dark:bg-[#0a0a0a]">
+        <Header />
+        {children}
+      </div>
+      <Footer />
       <SideBarToggle />
       <CommandDialog />
       <Toaster position="top-center" />

@@ -1,20 +1,21 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Layout from "@/components/Layout";
+import { client } from "@/sanity/lib/client";
+import { aboutStateQuery } from "@/sanity/lib/queries";
 import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
 };
 
-function layout({ children }: Props) {
+export const revalidate = 30;
+async function layout({ children }: Props) {
+  const about = await client.fetch(aboutStateQuery);
   return (
-    <div>
-      <div className="min-h-[80vh] bg-[#f5f5f5] dark:bg-[#0a0a0a]">
-        <Header />
+    <>
+      <Layout state={about}>
         {children}
-      </div>
-      <Footer />
-    </div>
+      </Layout>
+    </>
   );
 }
 
